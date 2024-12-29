@@ -1,5 +1,6 @@
 package parser;
 
+import compiler.CodeGenerator;
 import runtime.ScopeManager;
 
 import java.util.ArrayList;
@@ -23,4 +24,16 @@ public class BlockNode extends ASTNode {
             scopeManager.exitScope();
         }
     }
+
+    @Override
+    public void generateCode(ScopeManager scopeManager, CodeGenerator codeGen) {
+        scopeManager.enterScope();
+        codeGen.emit("enter_scope");
+        for (ASTNode statement : statements) {
+            statement.generateCode(scopeManager, codeGen);
+        }
+        codeGen.emit("exit_scope");
+        scopeManager.exitScope();
+    }
+
 }
