@@ -1,3 +1,16 @@
+# Ignore everything in .idea
+.idea/
+
+# Allow essential shared files
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/vcs.xml
+
+# Optional: Include shared run configurations and code styles
+!.idea/runConfigurations/
+!.idea/codeStyles/Project.xml
+
+
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
