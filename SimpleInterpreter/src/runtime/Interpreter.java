@@ -22,7 +22,5 @@ public class Interpreter {
         Parser parser = new Parser(tokens);
         BlockNode root = parser.parse();
         root.execute(scopeManager);
-        Integer val = scopeManager.getVariable("x");
-        System.out.println(val);
     }
 }

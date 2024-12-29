@@ -9,7 +9,6 @@ public class ScopeManager {
 
     public ScopeManager() {
         scopes = new Stack<>();
-        scopes.push(new HashMap<>()); // Global scope
     }
 
     public void enterScope() {
