@@ -9,7 +9,6 @@ public class ScopeManager {
 
     public ScopeManager() {
         scopes = new Stack<>();
-        scopes.push(new HashMap<>()); // Global scope
     }
 
     public void enterScope() {
@@ -17,7 +16,9 @@ public class ScopeManager {
     }
 
     public void exitScope() {
-        scopes.pop();
+        if (scopes.size() > 1) {
+            scopes.pop();
+        }
     }
 
     public void assignVariable(String name, Integer value) {
