@@ -11,11 +11,11 @@ public class PrintNode extends ASTNode {
 
     @Override
     void execute(ScopeManager scopeManager) {
-        // Print the resolved value of the variable
         Integer value = scopeManager.getVariable(variable);
-        if (value == null) {
+        /**if (value == null) {
             throw new RuntimeException("Undefined variable: " + variable);
-        }
+        }**/
+        //Per task request printing null instead of raising an exception
         System.out.println(value);
     }
 }

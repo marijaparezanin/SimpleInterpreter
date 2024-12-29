@@ -10,7 +10,8 @@ public class Lexer {
 
         for (String line : lines) {
             line = line.trim();
-            if (line.startsWith("{")) {
+
+            if (line.startsWith("scope {")) {
                 tokens.add(new Token(Token.Type.SCOPE_START, "scope"));
             } else if (line.equals("}")) {
                 tokens.add(new Token(Token.Type.SCOPE_END, "}"));

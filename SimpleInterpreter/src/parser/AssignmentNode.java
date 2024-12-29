@@ -13,13 +13,12 @@ public class AssignmentNode extends ASTNode {
 
     @Override
     void execute(ScopeManager scopeManager) {
-        // Assign the resolved value to the variable
         Integer resolvedValue = resolveValue(scopeManager, value);
         scopeManager.assignVariable(variable, resolvedValue);
     }
 
     private Integer resolveValue(ScopeManager scopeManager, String value) {
-        // If the value is a number, parse it; otherwise, retrieve it as a variable
+        // The value is saved as a string, as we have the case of it being another variable or a literal
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
