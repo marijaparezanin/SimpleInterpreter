@@ -16,7 +16,7 @@ public class ScopeManager {
     }
 
     public void exitScope() {
-        if (scopes.size() > 1) {
+        if(scopes.size() > 1) { //to retain global scope
             scopes.pop();
         }
     }
