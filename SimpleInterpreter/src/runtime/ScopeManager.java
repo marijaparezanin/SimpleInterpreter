@@ -16,7 +16,9 @@ public class ScopeManager {
     }
 
     public void exitScope() {
-        scopes.pop();
+        if(scopes.size() > 1) { //to retain global scope
+            scopes.pop();
+        }
     }
 
     public void assignVariable(String name, Integer value) {
