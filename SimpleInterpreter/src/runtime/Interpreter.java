@@ -6,7 +6,6 @@ import lexer.Lexer;
 import lexer.Token;
 import utils.FileReader;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Interpreter {
@@ -17,16 +16,13 @@ public class Interpreter {
     }
 
     public void interpret(String filePath) {
-        String code = null;
-        try {
-            code = FileReader.readProgram(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String code = FileReader.readCode(filePath);
         Lexer lexer = new Lexer();
         List<Token> tokens = lexer.tokenize(code);
         Parser parser = new Parser(tokens);
         BlockNode root = parser.parse();
         root.execute(scopeManager);
+        Integer val = scopeManager.getVariable("x");
+        System.out.println(val);
     }
 }

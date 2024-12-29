@@ -28,11 +28,11 @@ public class Parser {
                     root.addStatement(new PrintNode(variable));
                 }
                 case SCOPE_START -> {
-                    BlockNode block = parse(); // Recursively parse the block
+                    BlockNode block = parse();
                     root.addStatement(block);
                 }
                 case SCOPE_END -> {
-                    return root; // End of the current block
+                    return root;
                 }
                 default -> throw new RuntimeException("Unexpected token: " + token);
             }

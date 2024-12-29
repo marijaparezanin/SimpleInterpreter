@@ -33,6 +33,6 @@ public class ScopeManager {
                 return scope.get(name);
             }
         }
-        return null; // Variable not found
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 public class Lexer {
     public List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
+
         String[] lines = input.split("\\n");
 
         for (String line : lines) {

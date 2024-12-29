@@ -14,7 +14,6 @@ public class BlockNode extends ASTNode {
 
     @Override
     public void execute(ScopeManager scopeManager) {
-        // Enter a new scope for the block
         scopeManager.enterScope();
         try {
             for (ASTNode statement : statements) {
