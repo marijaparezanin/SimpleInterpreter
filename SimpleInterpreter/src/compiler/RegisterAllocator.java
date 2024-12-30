@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterAllocator {
-    private final String[] registers = {"rax", "rbx", "rcx", "rdx"}; // Available registers
+    private final String[] registers = {"eax", "ebx", "ecx", "edx"}; // Available registers
     private final Map<String, String> variableToRegister = new HashMap<>(); // Variable <-> Register mapping
     private int lastUsedRegister = -1;
     private String[] freedRegisterValue = null;
