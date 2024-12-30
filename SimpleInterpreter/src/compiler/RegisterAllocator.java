@@ -6,7 +6,9 @@ import java.util.Map;
 public class RegisterAllocator {
     private final String[] registers = {"eax", "ebx", "ecx", "edx"}; // Available registers
     private final Map<String, String> variableToRegister = new HashMap<>(); // Variable <-> Register mapping
+    private final Map<String, String> registerToVariable = new HashMap<>();
     private int lastUsedRegister = -1;
+    private boolean firstPassFinished = false;
     private String[] freedRegisterValue = null;
 
     public Map<String, String> getVariableToRegister() {
@@ -18,18 +20,24 @@ public class RegisterAllocator {
             return variableToRegister.get(variable);
         }
 
+
         if(lastUsedRegister == registers.length - 1) {
-            spillRegister();
+            firstPassFinished = true;
         }
         lastUsedRegister = (++lastUsedRegister) % registers.length;
+        if(firstPassFinished) {
+            spillRegister();
+        }
+
         variableToRegister.put(variable, registers[lastUsedRegister]);
+        registerToVariable.put(registers[lastUsedRegister], variable);
 
         return registers[lastUsedRegister];
     }
 
     private void spillRegister() {
-        String variableToSpill = variableToRegister.keySet().iterator().next();
-        String registerToFree = variableToRegister.get(variableToSpill);
+        String variableToSpill = registerToVariable.get(registers[lastUsedRegister]);
+        String registerToFree = registers[lastUsedRegister];
         freedRegisterValue = new String[]{variableToSpill, registerToFree};
         variableToRegister.remove(variableToSpill);
     }
@@ -51,4 +59,7 @@ public class RegisterAllocator {
     }
 
 
+    public String getNextRegister(){
+        return registers[(lastUsedRegister + 1) % registers.length];
+    }
 }

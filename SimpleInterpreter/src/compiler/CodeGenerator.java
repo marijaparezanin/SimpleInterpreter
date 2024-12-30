@@ -89,7 +89,7 @@ public class CodeGenerator {
             //if the variable has already been given a register
             if(registerAllocator.isRegisterAllocated(variable)){
                 String register = registerAllocator.getRegister(variable);
-                emit("; Updating the new value of " + variable + " for their register");
+                emit("; Updating the new value of " + variable + " for their register " + register);
                 emit("mov " + register + ", " + literalValue);
             } else {
                 String register = allocateRegister(variable);
@@ -106,11 +106,20 @@ public class CodeGenerator {
                     String variableRegister = registerAllocator.getRegister(variable);
                     emit("mov " + variableRegister + ", " + valueRegister);
                 }else{
-                    emit("mov dword [" + variable + "], " + valueRegister);
+                    //if the variable isn't going to take up the value register
+                    if(registerAllocator.getNextRegister().equals(valueRegister)){
+                        emit("; Allocating a register for "+ variable+ " would have taken up the register designated for " + value + " : " + valueRegister);
+                        emit("mov dword [" + variable + "], " + valueRegister);
+                    }else{
+                        String variableRegister = this.allocateRegister(variable);
+                        emit("; Allocating " + variableRegister +" register for " + variable);
+                        emit("mov " + variableRegister + ", " + valueRegister);
+                    }
                 }
             } else {
                 //fetch variable holding the value from memory, it doesn't have their designated register
                 String valueRegister = allocateRegister(value);
+                emit("; Having to fetch from memory");
                 emit("mov " + valueRegister + ", [" + value + "]"); // Move value of the variable to register
 
                 if(registerAllocator.isRegisterAllocated(variable)) {
@@ -118,7 +127,7 @@ public class CodeGenerator {
                     emit("mov " + variableRegister + ", " + valueRegister);
                 }else{
                     String variableRegister = allocateRegister(variable); // Allocate a register for the variable
-                    emit("; Allocating " + variableRegister +"  register for  " + variable);
+                    emit("; Allocating " + variableRegister +"  register for " + variable);
                     emit("mov " + variableRegister + ", " + valueRegister);
                 }
 
