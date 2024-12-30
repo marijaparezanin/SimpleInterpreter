@@ -26,7 +26,7 @@ public class InterpreterTests {
         interpreter.interpret(filePath);
 
         ScopeManager scopeManager = interpreter.getScopeManager();
-        assertEquals(12, scopeManager.getVariable("x"), "X should equal 10");
+        assertEquals(12, scopeManager.getVariable("x"), "X should equal 12");
         assertNull(scopeManager.getVariable("y"), "Y should be null");
     }
 
@@ -47,5 +47,13 @@ public class InterpreterTests {
         assertNull(interpreter.getScopeManager().getVariable("x"));
         assertNull(interpreter.getScopeManager().getVariable("y"));
     }
+
+    @Test
+    public void testAssigningToLiteral(){
+        String filePath = "test/resources/negative/test_assigning_to_literal.txt";
+        Interpreter interpreter = new Interpreter();
+        assertThrows(RuntimeException.class, () -> interpreter.interpret(filePath));
+    }
+
 
 }
