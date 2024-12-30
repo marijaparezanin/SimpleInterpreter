@@ -20,7 +20,7 @@ public class Compiler {
         return scopeManager;
     }
 
-    public void compile(String filePath) {
+    public void compile(String filePath, String outputFilePath) {
         String code = FileReader.readCode(filePath);
         Lexer lexer = new Lexer();
         List<Token> tokens = lexer.tokenize(code);
@@ -29,8 +29,7 @@ public class Compiler {
         CodeGenerator codeGen = new CodeGenerator();
         root.generateCode(scopeManager, codeGen); // Generate machine code
 
-        String generatedCode = codeGen.getGeneratedCode();
-        codeGen.writeToFile("output.asm"); // Output to an assembly file
+        codeGen.writeToFile(outputFilePath); // Output to an assembly file
         System.out.println("Compilation complete, assembly code generated.");
     }
 

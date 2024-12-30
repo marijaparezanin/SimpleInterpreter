@@ -1,6 +1,5 @@
 package parser;
 
-import compiler.CodeGenerator;
 import runtime.ScopeManager;
 
 public class PrintNode extends ASTNode {
@@ -20,12 +19,4 @@ public class PrintNode extends ASTNode {
         System.out.println(value);
     }
 
-    @Override
-    public void generateCode(ScopeManager scopeManager, CodeGenerator codeGen) {
-        Integer value = scopeManager.getVariable(variable);
-        if (value == null) {
-            throw new RuntimeException("Undefined variable: " + variable);
-        }
-        codeGen.generatePrintCode(String.valueOf(value));
-    }
 }

@@ -28,11 +28,11 @@ public class BlockNode extends ASTNode {
     @Override
     public void generateCode(ScopeManager scopeManager, CodeGenerator codeGen) {
         scopeManager.enterScope();
-        codeGen.emit("enter_scope");
+        codeGen.emit(";enter_scope");
         for (ASTNode statement : statements) {
             statement.generateCode(scopeManager, codeGen);
         }
-        codeGen.emit("exit_scope");
+        codeGen.emit(";exit_scope");
         scopeManager.exitScope();
     }
 

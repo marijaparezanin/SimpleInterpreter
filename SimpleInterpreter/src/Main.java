@@ -1,15 +1,16 @@
 import compiler.Compiler;
-import runtime.*;
+import runtime.Interpreter;
 
 public class Main {
     public static void main(String[] args) {
         String taskExamplePath = "src/task_example.txt";
-        String helper = "src/helper.txt";
+        String compilerPath = "src/compiler_example.txt";
+        String compilerOutputPath = "src/compiler_output.asm";
 
         Compiler compiler = new Compiler();
-        compiler.compile(helper);
+        compiler.compile(compilerPath, compilerOutputPath);
 
         Interpreter interpreter = new Interpreter();
-        interpreter.interpret(helper);
+        interpreter.interpret(taskExamplePath);
     }
 }

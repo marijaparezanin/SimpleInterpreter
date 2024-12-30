@@ -27,21 +27,24 @@ public class AssignmentNode extends ASTNode {
     public void generateCode(ScopeManager scopeManager, CodeGenerator codeGen) {
         try {
             //literal
-            codeGen.emit("mov " + variable + ", " + Integer.parseInt(value));      // Move value to variable directly
-            scopeManager.assignVariable(variable, Integer.parseInt(value)); // save the variable to scope
+            Integer literalValue = Integer.parseInt(value);
+            scopeManager.assignVariable(variable, literalValue); // save the variable to scope
+            if(codeGen.declareVariable(variable, literalValue)){ //first time declared, so it is initialized
+                return;                                          //skip unnecessary register assignment
+            }
+            codeGen.generateCodeForAssignment(variable, value);
         } catch (NumberFormatException e) {
             //variable
             Integer assigningVariableValue = scopeManager.getVariable(value);
             if (assigningVariableValue == null) {
                 throw new RuntimeException("Undefined variable: " + value);
             }
-
-            // Get a register to hold the value of the variable
-            String register = codeGen.allocateRegister();
-            //fetch from memory to register
-            codeGen.emit("mov " + register + ", " + value);
-            codeGen.emit("mov " + variable + ", " + register); //  register value -> target variable
+            //Add to scope
             scopeManager.assignVariable(variable, assigningVariableValue);
+            if(codeGen.declareVariable(variable, assigningVariableValue)){
+                return;
+            }
+            codeGen.generateCodeForAssignment(variable, value);
         }
     }
 
